@@ -4,7 +4,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts'
 
-interface DayData {
+export interface DayData {
   date: string
   wakatime: {
     total_seconds: number
@@ -19,13 +19,13 @@ interface DayData {
   }
 }
 
-function fmt(seconds: number): string {
+export function fmt(seconds: number): string {
   const h = Math.floor(seconds / 3600)
   const m = Math.floor((seconds % 3600) / 60)
   return `${h}h ${m}m`
 }
 
-function fmtDate(d: string): string {
+export function fmtDate(d: string): string {
   return d.slice(5) // MM-DD
 }
 
@@ -80,7 +80,7 @@ export default function App() {
   )
 }
 
-function Dashboard({ history }: { history: DayData[] }) {
+export function Dashboard({ history }: { history: DayData[] }) {
   const sorted = [...history].sort((a, b) => a.date.localeCompare(b.date))
   const last14 = sorted.slice(-14)
   const last7  = sorted.slice(-7)

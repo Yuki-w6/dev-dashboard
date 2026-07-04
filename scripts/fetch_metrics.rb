@@ -74,15 +74,17 @@ def fetch_github
   }
 end
 
-date      = Date.today.to_s
-snapshot  = { 'date' => date, 'wakatime' => fetch_wakatime, 'github' => fetch_github }
+if __FILE__ == $PROGRAM_NAME
+  date      = Date.today.to_s
+  snapshot  = { 'date' => date, 'wakatime' => fetch_wakatime, 'github' => fetch_github }
 
-daily_path = File.join(DATA_DIR, "#{date}.json")
-File.write(daily_path, JSON.pretty_generate(snapshot))
+  daily_path = File.join(DATA_DIR, "#{date}.json")
+  File.write(daily_path, JSON.pretty_generate(snapshot))
 
-history = Dir[File.join(DATA_DIR, '2*.json')]
-            .sort
-            .map { |f| JSON.parse(File.read(f)) }
-File.write(File.join(DATA_DIR, 'history.json'), JSON.pretty_generate(history))
+  history = Dir[File.join(DATA_DIR, '2*.json')]
+              .sort
+              .map { |f| JSON.parse(File.read(f)) }
+  File.write(File.join(DATA_DIR, 'history.json'), JSON.pretty_generate(history))
 
-puts date
+  puts date
+end
