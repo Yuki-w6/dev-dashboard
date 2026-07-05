@@ -63,8 +63,9 @@ def fetch_github
   res = http.request(req)
   raise "HTTP #{res.code}: #{res.body}" unless res.is_a?(Net::HTTPSuccess)
 
-  col = JSON.parse(res.body).dig('data', 'user', 'contributionsCollection')
-  raise 'contributionsCollection is nil' if col.nil?
+  parsed = JSON.parse(res.body)
+  col = parsed.dig('data', 'user', 'contributionsCollection')
+  raise "contributionsCollection is nil: #{parsed.to_json}" if col.nil?
 
   {
     'commits'             => col['totalCommitContributions'].to_i,
